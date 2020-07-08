@@ -1,27 +1,37 @@
 [![Community Project header](https://github.com/newrelic/opensource-website/raw/master/src/images/categories/Community_Project.png)](https://opensource.newrelic.com/oss-category/#community-project)
 
-# [Name of Project] [build badges go here when available]
+# newrelic-incident-analysis-node
 
->[Brief description - what is the project and value does it provide? How often should users expect to get releases? How is versioning set up? Where does this project want to go?]
+>Nodejs/Express.js project that transforms 3rd party (Pager Duty/Opsgenie/VictorOps) incidents into New Relic Insight events.  These events can then be used to help calculate MTTR and correlate incidents to entities for better root cause analysis. 
 
-## Installation
 
-> [Include a step-by-step procedure on how to get your code installed. Be sure to include any third-party dependencies that need to be installed separately]
+## Installing and using newrelic-incident-analysis-node
+
+>Requires Nodejs 8.X or higher to run.  
+To install it,  run npm install from the root directory, this will install all need modules.   
+Next, manually edit the /controllers/insightshandler.js file.  At the top of the file there are two constants which must be set that 
+come from your New Relic account:  insights_api_key and insights_url.  Examples of these are provided in the file. 
+
 
 ## Getting Started
->[Simple steps to start working with the software similar to a "Hello World"]
+>Once installed and configured, from the root directory run the app :   node bin/www    This will start the nodejs server at 
+port 3000.  
 
 ## Usage
->[**Optional** - Include more thorough instructions on how to use the software. This section might not be needed if the Getting Started section is enough. Remove this section if it's not needed.]
+>The incidents from each of the 3rd party services are handled on seperate routes, which use seperate parsers.  The 
+incidents are transformed inside a utility parser, and a insights event object gets created.  The obj is passed to the 
+insightshandler, where it is queued up,  and eventually sent out to New Relic.
 
+The code flow is :   <inbound route> --> parser/transformer --->   insights handler
 
-## Building
+the pagerduty route is at:  /pagerduty
 
->[**Optional** - Include this section if users will need to follow specific instructions to build the software from source. Be sure to include any third party build dependencies that need to be installed separately. Remove this section if it's not needed.]
+the victorops route is at: /victorops. 
 
-## Testing
+the opsgenie route is at: /opsgeine. 
 
->[**Optional** - Include instructions on how to run tests if we include tests with the codebase. Remove this section if it's not needed.]
+Should be run as a service,  or could be migrated into a AWS Lambda function.
+
 
 ## Support
 
@@ -35,4 +45,4 @@ If you have any questions, or to execute our corporate CLA, required if your con
 
 ## License
 [Project Name] is licensed under the [Apache 2.0](http://apache.org/licenses/LICENSE-2.0.txt) License.
->[If applicable: The [project name] also uses source code from third-party libraries. You can find full details on which libraries are used and the terms under which they are licensed in the third-party notices document.]
+>[If applicable: The newrelic-incident-analysis-node also uses source code from third-party libraries. You can find full details on which libraries are used and the terms under which they are licensed in the third-party notices document.]
