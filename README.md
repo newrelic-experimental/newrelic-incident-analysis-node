@@ -35,6 +35,13 @@ Should be run as a service,  or could be migrated into a AWS Lambda function.  R
 on port 3000, this can be changed inside the bin/www file.   
 
 
+The utility transformers (under /utils) can and should be customized to your needs.  
+You can quickly add or trim the transformer to what exactly you want to place into
+New Relic Insights.   Remember that nsights requires a flat json blob, so any arrays that 
+come in must be transformed.  The transfromer can be quickly modified to split a single
+inbound alert into multiple insight events for example. 
+
+
 ## Support
 
 New Relic hosts and moderates an online forum where customers can interact with New Relic employees as well as other customers to get help and share best practices. Like all official New Relic open source projects, there's a related Community topic in the New Relic Explorers Hub. You can find this project's topic/threads here:
